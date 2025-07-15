@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Quiz for Teens</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: #fff;
+        }
+        h1 {
+            text-align: center;
+            color: #ff9900;
+        }
+        .edu-header {
+            background-color: #ff9900;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .section {
+            background-color: #333;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .section h2 {
+            color: #0066cc;
+        }
+        .description {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .question {
+            margin: 15px 0;
+            background-color: #f0f0f0;
+            color: #000;
+            padding: 15px;
+            border-radius: 10px;
+            position: relative;
+        }
+        .question p {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .question:before {
+            content: "❓";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            font-size: 20px;
+            color: #ff9900;
+        }
+        .option {
+            margin: 10px 0;
+        }
+        .option input {
+            margin-right: 10px;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        #aed-counter {
+            position: sticky;
+            top: 20px;
+            background-color: #0066cc;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        #congrats-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 100, 200, 0.9);
+            color: white;
+            text-align: center;
+            padding-top: 20%;
+            font-size: 24px;
+            z-index: 1000;
+        }
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            text-align: center;
+            z-index: 1001;
+        }
+        #popup button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            background-color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+    <div id="aed-counter">Earnings: AED 0.00</div>
+    <h1>Cybersecurity Quiz for Teens</h1>
+    <div class="edu-header">
+        68% of data breaches involve a human element. As well as data breaches, human error is often the root cause of cyberattacks such as stolen credentials, phishing attempts, ransomware, or wire fraud attacks — to name a few.
+    </div>
+
+    <div class="section">
+        <h2>Posting Personal Information Online</h2>
+        <div class="description">
+            Sharing personal details like your address, phone number, or school on social media can expose you to strangers who might misuse it. Be cautious about what you post publicly. Always use privacy settings to control who sees your information.
+        </div>
+        <div class="question" id="q1">
+            <p>1. What should you do before posting your home address on social media?</p>
+            <div class="option"><input type="radio" name="q1" value="A"> A) Make sure the post is public so everyone can see it</div>
+            <div class="option"><input type="radio" name="q1" value="B"> B) Check your privacy settings to limit who can view it</div>
+            <div class="option"><input type="radio" name="q1" value="C"> C) Share it to get more followers</div>
+            <div class="option"><input type="radio" name="q1" value="D"> D) Post it with a cool hashtag</div>
+            <div class="feedback" id="feedback-q1"></div>
+        </div>
+        <!-- Questions 2-7 follow the same radio button format -->
+        <div class="question" id="q2">
+            <p>2. Why is it risky to share your full name and birthday publicly?</p>
+            <div class="option"><input type="radio" name="q2" value="A"> A) It makes your profile look boring</div>
+            <div class="option"><input type="radio" name="q2" value="B"> B) It can help hackers guess your passwords</div>
+            <div class="option"><input type="radio" name="q2" value="C"> C) It’s fine if you have a private account</div>
+            <div class="option"><input type="radio" name="q2" value="D"> D) It helps you get free gifts</div>
+            <div class="feedback" id="feedback-q2"></div>
+        </div>
+        <!-- Add q3-q7 similarly with correct answers B, B, B, C, B, B -->
+    </div>
+
+    <div class="section">
+        <h2>Phishing and Smishing Risks</h2>
+        <div class="description">
+            Phishing (via email) and smishing (via text) are scams where attackers trick you into sharing personal info or clicking bad links. Never click links or share details from unknown sources. Always verify the sender before responding.
+        </div>
+        <div class="question" id="q8">
+            <p>8. Which of the following are common methods used in phishing attacks?</p>
+            <div class="option"><input type="checkbox" name="q8" value="A"> A) Sending deceptive emails to trick recipients into revealing sensitive details</div>
+            <div class="option"><input type="checkbox" name="q8" value="B"> B) Creating fake websites that mimic legitimate ones to steal login credentials</div>
+            <div class="option"><input type="checkbox" name="q8" value="C"> C) Distributing malware through emails or chat messages</div>
+            <div class="option"><input type="checkbox" name="q8" value="D"> D) Sending fraudulent messages via SMS or social media</div>
+            <div class="feedback" id="feedback-q8"></div>
+        </div>
+        <div class="question" id="q9">
+            <p>9. You get a text saying you won a free phone but need to click a link. What do you do?</p>
+            <div class="option"><input type="radio" name="q9" value="A"> A) Click the link to claim the prize</div>
+            <div class="option"><input type="radio" name="q9" value="B"> B) Ignore the text and delete it</div>
+            <div class="option"><input type="radio" name="q9" value="C"> C) Reply with your name to confirm</div>
+            <div class="option"><input type="radio" name="q9" value="D"> D) Share the link with friends</div>
+            <div class="feedback" id="feedback-q9"></div>
+        </div>
+        <!-- Add q10-q14 similarly with correct answers C, B, B, B, B -->
+    </div>
+
+    <div class="section">
+        <h2>Checking and Ensuring Links and URLs</h2>
+        <div class="description">
+            Fake links can lead to scams or malware. Always check a URL’s spelling and domain (like .com or .org) before clicking. Hover over links to see the real address and only trust official sources.
+        </div>
+        <div class="question" id="q15">
+            <p>15. How can you check a link before clicking it?</p>
+            <div class="option"><input type="radio" name="q15" value="A"> A) Click it to see where it goes</div>
+            <div class="option"><input type="radio" name="q15" value="B"> B) Hover over it to view the URL</div>
+            <div class="option"><input type="radio" name="q15" value="C"> C) Copy and paste it into a text</div>
+            <div class="option"><input type="radio" name="q15" value="D"> D) Share it with a friend first</div>
+            <div class="feedback" id="feedback-q15"></div>
+        </div>
+        <!-- Add q16-q20 similarly with correct answers B, B, B, B, B -->
+    </div>
+
+    <button id="submit-btn" onclick="submitQuiz()">Confirm</button>
+    <div id="congrats-screen"></div>
+    <div id="popup">
+        <p id="popup-message"></p>
+        <button onclick="closePopup()">OK</button>
+    </div>
+
+    <script>
+        const answers = {
+            q1: { correct: 'B', explanation: 'Limiting who can see personal info protects you from strangers.', text: 'Check your privacy settings to limit who can view it' },
+            q2: { correct: 'B', explanation: 'Personal details can be used for identity theft or hacking.', text: 'It can help hackers guess your passwords' },
+            q3: { correct: 'B', explanation: 'Avoid sharing specific locations to stay safe.', text: 'Post it privately and avoid tagging your location' },
+            q4: { correct: 'B', explanation: 'Private messages keep your number safe from strangers.', text: 'Send it privately via direct message' },
+            q5: { correct: 'C', explanation: 'Only share usernames with people you trust.', text: 'Share it only with trusted friends' },
+            q6: { correct: 'B', explanation: 'Routines can help strangers predict where you’ll be.', text: 'Strangers could track your movements' },
+            q7: { correct: 'B', explanation: 'Private settings limit who can access your info.', text: 'Private so only approved followers see your posts' },
+            q8: { correct: ['A', 'B', 'D'], explanation: 'These are common phishing tactics to trick or steal information.', text: 'A, B, D' },
+            q9: { correct: 'B', explanation: 'Unsolicited texts with links are often smishing scams.', text: 'Ignore the text and delete it' },
+            q10: { correct: 'C', explanation: 'Phishing emails often have typos or suspicious addresses.', text: 'It has spelling errors or a weird sender address' },
+            q11: { correct: 'B', explanation: 'Banks don’t ask for PINs via text; verify directly.', text: 'Call your bank using their official number' },
+            q12: { correct: 'B', explanation: 'Smishing texts create urgency to trick you.', text: 'It asks you to act quickly or lose something' },
+            q13: { correct: 'B', explanation: 'Legitimate prizes don’t require payment upfront.', text: 'Ignore the message and report it' },
+            q14: { correct: 'B', explanation: 'Avoid sharing info with unknown sources.', text: 'Never share personal info from unsolicited messages' },
+            q15: { correct: 'B', explanation: 'Hovering shows the real URL without clicking.', text: 'Hover over it to view the URL' },
+            q16: { correct: 'B', explanation: 'Fake URLs often have misspellings like “faceb00k”.', text: 'It has extra zeros in the name' },
+            q17: { correct: 'B', explanation: 'Typing the URL avoids fake links.', text: 'Type the official URL directly into your browser' },
+            q18: { correct: 'B', explanation: 'Official government sites use .gov domains.', text: 'Avoid it; government sites use .gov' },
+            q19: { correct: 'A', explanation: 'Misspelled URLs like “youtub” are often scams.', text: 'It’s missing an “e” in YouTube' },
+            q20: { correct: 'B', explanation: 'Verify links through official sources.', text: 'Check the website’s official URL or contact them' }
+        };
+
+        let earnings = 0;
+        const submitBtn = document.getElementById('submit-btn');
+        const popup = document.getElementById('popup');
+        const popupMessage = document.getElementById('popup-message');
+        const congratsScreen = document.getElementById('congrats-screen');
+
+        if (localStorage.getItem('quizTaken')) {
+            disableQuiz();
+        }
+
+        function disableQuiz() {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Quiz Already Taken';
+            document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => input.disabled = true);
+        }
+
+        function showPopup(message) {
+            popupMessage.innerHTML = `😞 Sorry, that's incorrect!<br>Correct answer: ${message}`;
+            popup.style.display = 'block';
+        }
+
+        function closePopup() {
+            popup.style.display = 'none';
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            earnings = 0;
+            let allAnswered = true;
+
+            for (let i = 1; i <= 20; i++) {
+                const feedbacks = document.getElementById(`feedback-q${i}`);
+                if (i === 8) { // Checkbox question with multiple correct answers
+                    const checked = document.querySelectorAll(`input[name="q${i}"]:checked`);
+                    const correctAnswers = answers[`q${i}`].correct;
+                    let allCorrect = checked.length === correctAnswers.length && checked.length === new Set([...checked].map(ch => ch.value)).size;
+                    if (allCorrect) {
+                        checked.forEach(ch => {
+                            if (correctAnswers.includes(ch.value)) score++;
+                        });
+                        if (score >= correctAnswers.length) {
+                            earnings += 5;
+                            feedbacks.className = 'feedback correct';
+                            feedbacks.innerHTML = `Correct! ${answers[`q${i}`].explanation}`;
+                        } else {
+                            feedbacks.className = 'feedback incorrect';
+                            feedbacks.innerHTML = `Incorrect. ${answers[`q${i}`].explanation}`;
+                            showPopup(answers[`q${i}`].text);
+                        }
+                    } else {
+                        feedbacks.className = 'feedback incorrect';
+                        feedbacks.innerHTML = `Incorrect. ${answers[`q${i}`].explanation}`;
+                        showPopup(answers[`q${i}`].text);
+                    }
+                } else { // Radio button questions
+                    const question = document.querySelector(`input[name="q${i}"]:checked`);
+                    if (!question) {
+                        allAnswered = false;
+                        feedbacks.className = 'feedback incorrect';
+                        feedbacks.innerHTML = 'Please select an answer.';
+                        continue;
+                    }
+                    const userAnswer = question.value;
+                    const correctAnswer = answers[`q${i}`].correct;
+                    const explanation = answers[`q${i}`].explanation;
+                    const correctText = answers[`q${i}`].text;
+                    if (userAnswer === correctAnswer) {
+                        score++;
+                        earnings += 5;
+                        feedbacks.className = 'feedback correct';
+                        feedbacks.innerHTML = `Correct! ${explanation}`;
+                    } else {
+                        feedbacks.className = 'feedback incorrect';
+                        feedbacks.innerHTML = `Incorrect. ${explanation}`;
+                        showPopup(`${correctText}<br>${explanation}`);
+                    }
+                }
+            }
+
+            if (allAnswered) {
+                document.getElementById('aed-counter').innerHTML = `Earnings: AED ${earnings.toFixed(2)}`;
+                congratsScreen.style.display = 'block';
+                congratsScreen.innerHTML = `Congratulations! You earned AED ${earnings.toFixed(2)}!`;
+                localStorage.setItem('quizTaken', 'true');
+                disableQuiz();
+            } else {
+                alert('Please answer all questions before confirming.');
+            }
+        }
+    </script>
+</body>
+</html>
