@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Quiz for Teens</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: #fff;
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #ff9900;
+        }
+        .edu-header {
+            background-color: #ff9900;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .section {
+            background-color: #333;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            margin-top: 80px; /* Increased margin to ensure space */
+            position: relative;
+            z-index: 1;
+        }
+        .section h2 {
+            color: #0066cc;
+        }
+        .description {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .question {
+            margin: 15px 0;
+            background-color: #f0f0f0;
+            color: #000;
+            padding: 15px;
+            border-radius: 10px;
+            position: relative;
+            display: none;
+        }
+        .question.active {
+            display: block;
+        }
+        .question p {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .question:before {
+            content: "❓";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            font-size: 20px;
+            color: #ff9900;
+        }
+        .option {
+            margin: 10px 0;
+        }
+        .option input {
+            margin-right: 10px;
+        }
+        .option span {
+            vertical-align: middle;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .correct .option input:checked + span {
+            color: #155724;
+            font-weight: bold;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .incorrect .option input:checked + span {
+            color: #721c24;
+            font-weight: bold;
+        }
+        #aed-counter {
+            position: sticky;
+            top: 20px;
+            background-color: #0066cc;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            z-index: 2000; /* Significantly increased z-index */
+            width: 100%;
+            box-sizing: border-box;
+        }
+        #congrats-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 100, 200, 0.9);
+            color: white;
+            text-align: center;
+            padding-top: 20%;
+            font-size: 24px;
+            z-index: 1000;
+        }
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            text-align: center;
+            z-index: 3000;
+        }
+        #popup button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            background-color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+    <div id="aed-counter">Earnings: AED 0.00</div>
+    <h1>Cybersecurity Quiz for Teens</h1>
+    <div class="edu-header">
+        68% of data breaches involve a human element. As well as data breaches, human error is often the root cause of cyberattacks such as stolen credentials, phishing attempts, ransomware, or wire fraud attacks — to name a few.
+    </div>
+
+    <div class="section">
+        <h2>Posting Personal Information Online</h2>
+        <div class="description">
+            Sharing personal details like your address, phone number, or school on social media can expose you to strangers who might misuse it. Be cautious about what you post publicly. Always use privacy settings to control who sees your information.
+        </div>
+        <div class="question" id="q1" data-index="1">
+            <p>1. What should you do before posting your home address on social media?</p>
+            <div class="option"><input type="radio" name="q1" value="A"><span> A) Make sure the post is public so everyone can see it</span></div>
+            <div class="option"><input type="radio" name="q1" value="B"><span> B) Check your privacy settings to limit who can view it</span></div>
+            <div class="option"><input type="radio" name="q1" value="C"><span> C) Share it to get more followers</span></div>
+            <div class="option"><input type="radio" name="q1" value="D"><span> D) Post it with a cool hashtag</span></div>
+            <button onclick="submitAnswer(1)">Submit</button>
+            <div class="feedback" id="feedback-q1"></div>
+        </div>
+        <div class="question" id="q2" data-index="2">
+            <p>2. Why is it risky to share your full name and birthday publicly?</p>
+            <div class="option"><input type="radio" name="q2" value="A"><span> A) It makes your profile look boring</span></div>
+            <div class="option"><input type="radio" name="q2" value="B"><span> B) It can help hackers guess your passwords</span></div>
+            <div class="option"><input type="radio" name="q2" value="C"><span> C) It’s fine if you have a private account</span></div>
+            <div class="option"><input type="radio" name="q2" value="D"><span> D) It helps you get free gifts</span></div>
+            <button onclick="submitAnswer(2)">Submit</button>
+            <div class="feedback" id="feedback-q2"></div>
+        </div>
+        <div class="question" id="q3" data-index="3">
+            <p>3. You want to post a photo from your school trip. What’s the safest way?</p>
+            <div class="option"><input type="radio" name="q3" value="A"><span> A) Share it publicly with your school’s name</span></div>
+            <div class="option"><input type="radio" name="q3" value="B"><span> B) Post it privately and avoid tagging your location</span></div>
+            <div class="option"><input type="radio" name="q3" value="C"><span> C) Share it with your full name and address</span></div>
+            <div class="option"><input type="radio" name="q3" value="D"><span> D) Post it on a public group chat</span></div>
+            <button onclick="submitAnswer(3)">Submit</button>
+            <div class="feedback" id="feedback-q3"></div>
+        </div>
+        <div class="question" id="q4" data-index="4">
+            <p>4. A friend asks you to share your phone number on a public post. What do you do?</p>
+            <div class="option"><input type="radio" name="q4" value="A"><span> A) Share it to be nice</span></div>
+            <div class="option"><input type="radio" name="q4" value="B"><span> B) Send it privately via direct message</span></div>
+            <div class="option"><input type="radio" name="q4" value="C"><span> C) Post it with a funny emoji</span></div>
+            <div class="option"><input type="radio" name="q4" value="D"><span> D) Ignore the request completely</span></div>
+            <button onclick="submitAnswer(4)">Submit</button>
+            <div class="feedback" id="feedback-q4"></div>
+        </div>
+        <div class="question" id="q5" data-index="5">
+            <p>5. What’s a safe way to share your gaming username online?</p>
+            <div class="option"><input type="radio" name="q5" value="A"><span> A) Use your real name and age in the username</span></div>
+            <div class="option"><input type="radio" name="q5" value="B"><span> B) Post it on a public forum</span></div>
+            <div class="option"><input type="radio" name="q5" value="C"><span> C) Share it only with trusted friends</span></div>
+            <div class="option"><input type="radio" name="q5" value="D"><span> D) Include your school name in it</span></div>
+            <button onclick="submitAnswer(5)">Submit</button>
+            <div class="feedback" id="feedback-q5"></div>
+        </div>
+        <div class="question" id="q6" data-index="6">
+            <p>6. Why should you avoid posting your daily routine online?</p>
+            <div class="option"><input type="radio" name="q6" value="A"><span> A) It makes your posts more interesting</span></div>
+            <div class="option"><input type="radio" name="q6" value="B"><span> B) Strangers could track your movements</span></div>
+            <div class="option"><input type="radio" name="q6" value="C"><span> C) It helps you stay organized</span></div>
+            <div class="option"><input type="radio" name="q6" value="D"><span> D) It’s safe if you use emojis</span></div>
+            <button onclick="submitAnswer(6)">Submit</button>
+            <div class="feedback" id="feedback-q6"></div>
+        </div>
+        <div class="question" id="q7" data-index="7">
+            <p>7. What’s the safest way to share your phone number online?</p>
+            <div class="option"><input type="radio" name="q7" value="A"><span> A) Post it publicly with a hashtag</span></div>
+            <div class="option"><input type="radio" name="q7" value="B"><span> B) Private so only approved followers see your posts</span></div>
+            <div class="option"><input type="radio" name="q7" value="C"><span> C) Share it in a group chat</span></div>
+            <div class="option"><input type="radio" name="q7" value="D"><span> D) Add it to your bio</span></div>
+            <button onclick="submitAnswer(7)">Submit</button>
+            <div class="feedback" id="feedback-q7"></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Phishing and Smishing Risks</h2>
+        <div class="description">
+            Phishing (via email) and smishing (via text) are scams where attackers trick you into sharing personal info or clicking bad links. Never click links or share details from unknown sources. Always verify the sender before responding.
+        </div>
+        <div class="question" id="q8" data-index="8">
+            <p>8. Which of the following are common methods used in phishing attacks?</p>
+            <div class="option"><input type="checkbox" name="q8" value="A"><span> A) Sending deceptive emails to trick recipients into revealing sensitive details</span></div>
+            <div class="option"><input type="checkbox" name="q8" value="B"><span> B) Creating fake websites that mimic legitimate ones to steal login credentials</span></div>
+            <div class="option"><input type="checkbox" name="q8" value="C"><span> C) Distributing malware through emails or chat messages</span></div>
+            <div class="option"><input type="checkbox" name="q8" value="D"><span> D) Sending fraudulent messages via SMS or social media</span></div>
+            <button onclick="submitAnswer(8)">Submit</button>
+            <div class="feedback" id="feedback-q8"></div>
+        </div>
+        <div class="question" id="q9" data-index="9">
+            <p>9. You get a text saying you won a free phone but need to click a link. What do you do?</p>
+            <div class="option"><input type="radio" name="q9" value="A"><span> A) Click the link to claim the prize</span></div>
+            <div class="option"><input type="radio" name="q9" value="B"><span> B) Ignore the text and delete it</span></div>
+            <div class="option"><input type="radio" name="q9" value="C"><span> C) Reply with your name to confirm</span></div>
+            <div class="option"><input type="radio" name="q9" value="D"><span> D) Share the link with friends</span></div>
+            <button onclick="submitAnswer(9)">Submit</button>
+            <div class="feedback" id="feedback-q9"></div>
+        </div>
+        <div class="question" id="q10" data-index="10">
+            <p>10. What’s a sign of a phishing email?</p>
+            <div class="option"><input type="radio" name="q10" value="A"><span> A) It has a professional logo</span></div>
+            <div class="option"><input type="radio" name="q10" value="B"><span> B) It has spelling errors or a weird sender address</span></div>
+            <div class="option"><input type="radio" name="q10" value="C"><span> C) It offers a gift card</span></div>
+            <div class="option"><input type="radio" name="q10" value="D"><span> D) It’s from your bank</span></div>
+            <button onclick="submitAnswer(10)">Submit</button>
+            <div class="feedback" id="feedback-q10"></div>
+        </div>
+        <div class="question" id="q11" data-index="11">
+            <p>11. Your bank texts asking for your PIN. What should you do?</p>
+            <div class="option"><input type="radio" name="q11" value="A"><span> A) Reply with your PIN</span></div>
+            <div class="option"><input type="radio" name="q11" value="B"><span> B) Call your bank using their official number</span></div>
+            <div class="option"><input type="radio" name="q11" value="C"><span> C) Click the link they sent</span></div>
+            <div class="option"><input type="radio" name="q11" value="D"><span> D) Ignore it</span></div>
+            <button onclick="submitAnswer(11)">Submit</button>
+            <div class="feedback" id="feedback-q11"></div>
+        </div>
+        <div class="question" id="q12" data-index="12">
+            <p>12. What makes a smishing text suspicious?</p>
+            <div class="option"><input type="radio" name="q12" value="A"><span> A) It’s from a friend</span></div>
+            <div class="option"><input type="radio" name="q12" value="B"><span> B) It asks you to act quickly or lose something</span></div>
+            <div class="option"><input type="radio" name="q12" value="C"><span> C) It offers a discount</span></div>
+            <div class="option"><input type="radio" name="q12" value="D"><span> D) It’s short</span></div>
+            <button onclick="submitAnswer(12)">Submit</button>
+            <div class="feedback" id="feedback-q12"></div>
+        </div>
+        <div class="question" id="q13" data-index="13">
+            <p>13. You get a message saying you won a prize but need to pay first. What’s true?</p>
+            <div class="option"><input type="radio" name="q13" value="A"><span> A) It’s a legitimate offer</span></div>
+            <div class="option"><input type="radio" name="q13" value="B"><span> B) Ignore the message and report it</span></div>
+            <div class="option"><input type="radio" name="q13" value="C"><span> C) Pay to claim it</span></div>
+            <div class="option"><input type="radio" name="q13" value="D"><span> D) Share your details</span></div>
+            <button onclick="submitAnswer(13)">Submit</button>
+            <div class="feedback" id="feedback-q13"></div>
+        </div>
+        <div class="question" id="q14" data-index="14">
+            <p>14. What should you never do with an unsolicited message?</p>
+            <div class="option"><input type="radio" name="q14" value="A"><span> A) Delete it</span></div>
+            <div class="option"><input type="radio" name="q14" value="B"><span> B) Never share personal info from unsolicited messages</span></div>
+            <div class="option"><input type="radio" name="q14" value="C"><span> C) Reply to confirm</span></div>
+            <div class="option"><input type="radio" name="q14" value="D"><span> D) Block the sender</span></div>
+            <button onclick="submitAnswer(14)">Submit</button>
+            <div class="feedback" id="feedback-q14"></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Checking and Ensuring Links and URLs</h2>
+        <div class="description">
+            Fake links can lead to scams or malware. Always check a URL’s spelling and domain (like .com or .org) before clicking. Hover over links to see the real address and only trust official sources.
+        </div>
+        <div class="question" id="q15" data-index="15">
+            <p>15. How can you check a link before clicking it?</p>
+            <div class="option"><input type="radio" name="q15" value="A"><span> A) Click it to see where it goes</span></div>
+            <div class="option"><input type="radio" name="q15" value="B"><span> B) Hover over it to view the URL</span></div>
+            <div class="option"><input type="radio" name="q15" value="C"><span> C) Copy and paste it into a text</span></div>
+            <div class="option"><input type="radio" name="q15" value="D"><span> D) Share it with a friend first</span></div>
+            <button onclick="submitAnswer(15)">Submit</button>
+            <div class="feedback" id="feedback-q15"></div>
+        </div>
+        <div class="question" id="q16" data-index="16">
+            <p>16. What’s a red flag in a URL like “faceb00k.com”?</p>
+            <div class="option"><input type="radio" name="q16" value="A"><span> A) It’s too short</span></div>
+            <div class="option"><input type="radio" name="q16" value="B"><span> B) It has extra zeros in the name</span></div>
+            <div class="option"><input type="radio" name="q16" value="C"><span> C) It ends in .com</span></div>
+            <div class="option"><input type="radio" name="q16" value="D"><span> D) It’s long</span></div>
+            <button onclick="submitAnswer(16)">Submit</button>
+            <div class="feedback" id="feedback-q16"></div>
+        </div>
+        <div class="question" id="q17" data-index="17">
+            <p>17. How can you avoid fake links?</p>
+            <div class="option"><input type="radio" name="q17" value="A"><span> A) Click all links to check</span></div>
+            <div class="option"><input type="radio" name="q17" value="B"><span> B) Type the official URL directly into your browser</span></div>
+            <div class="option"><input type="radio" name="q17" value="C"><span> C) Use a shortcut</span></div>
+            <div class="option"><input type="radio" name="q17" value="D"><span> D) Share the link</span></div>
+            <button onclick="submitAnswer(17)">Submit</button>
+            <div class="feedback" id="feedback-q17"></div>
+        </div>
+        <div class="question" id="q18" data-index="18">
+            <p>18. Which domain is safest for a government site?</p>
+            <div class="option"><input type="radio" name="q18" value="A"><span> A) .gov</span></div>
+            <div class="option"><input type="radio" name="q18" value="B"><span> B) Avoid it; government sites use .gov</span></div>
+            <div class="option"><input type="radio" name="q18" value="C"><span> C) .com</span></div>
+            <div class="option"><input type="radio" name="q18" value="D"><span> D) .org</span></div>
+            <button onclick="submitAnswer(18)">Submit</button>
+            <div class="feedback" id="feedback-q18"></div>
+        </div>
+        <div class="question" id="q19" 
