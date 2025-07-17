@@ -12,6 +12,7 @@
             padding: 20px;
             background-color: #1a1a1a;
             color: #fff;
+            position: relative;
         }
         h1 {
             text-align: center;
@@ -30,7 +31,9 @@
             margin-bottom: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-            margin-top: 60px; /* Space above section to avoid overlap with AED counter */
+            margin-top: 80px; /* Increased margin to ensure space */
+            position: relative;
+            z-index: 1;
         }
         .section h2 {
             color: #0066cc;
@@ -46,10 +49,10 @@
             padding: 15px;
             border-radius: 10px;
             position: relative;
-            display: none; /* Hide all questions initially */
+            display: none;
         }
         .question.active {
-            display: block; /* Show only the active question */
+            display: block;
         }
         .question p {
             font-weight: bold;
@@ -104,7 +107,9 @@
             text-align: center;
             font-size: 18px;
             margin-bottom: 20px;
-            z-index: 1000; /* Ensure it stays above other content */
+            z-index: 2000; /* Significantly increased z-index */
+            width: 100%;
+            box-sizing: border-box;
         }
         #congrats-screen {
             display: none;
@@ -131,7 +136,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
             text-align: center;
-            z-index: 1001;
+            z-index: 3000;
         }
         #popup button {
             margin-top: 10px;
@@ -379,113 +384,4 @@
         const answers = {
             q1: { correct: 'B', explanation: 'Limiting who can see personal info protects you from strangers.', text: 'Check your privacy settings to limit who can view it' },
             q2: { correct: 'B', explanation: 'Personal details can be used for identity theft or hacking.', text: 'It can help hackers guess your passwords' },
-            q3: { correct: 'B', explanation: 'Avoid sharing specific locations to stay safe.', text: 'Post it privately and avoid tagging your location' },
-            q4: { correct: 'B', explanation: 'Private messages keep your number safe from strangers.', text: 'Send it privately via direct message' },
-            q5: { correct: 'C', explanation: 'Only share usernames with people you trust.', text: 'Share it only with trusted friends' },
-            q6: { correct: 'B', explanation: 'Routines can help strangers predict where you’ll be.', text: 'Strangers could track your movements' },
-            q7: { correct: 'B', explanation: 'Private settings limit who can access your info.', text: 'Private so only approved followers see your posts' },
-            q8: { correct: ['A', 'B', 'D'], explanation: 'These are common phishing tactics to trick or steal information.', text: 'A, B, D' },
-            q9: { correct: 'B', explanation: 'Unsolicited texts with links are often smishing scams.', text: 'Ignore the text and delete it' },
-            q10: { correct: 'B', explanation: 'Phishing emails often have typos or suspicious addresses.', text: 'It has spelling errors or a weird sender address' },
-            q11: { correct: 'B', explanation: 'Banks don’t ask for PINs via text; verify directly.', text: 'Call your bank using their official number' },
-            q12: { correct: 'B', explanation: 'Smishing texts create urgency to trick you.', text: 'It asks you to act quickly or lose something' },
-            q13: { correct: 'B', explanation: 'Legitimate prizes don’t require payment upfront.', text: 'Ignore the message and report it' },
-            q14: { correct: 'B', explanation: 'Avoid sharing info with unknown sources.', text: 'Never share personal info from unsolicited messages' },
-            q15: { correct: 'B', explanation: 'Hovering shows the real URL without clicking.', text: 'Hover over it to view the URL' },
-            q16: { correct: 'B', explanation: 'Fake URLs often have misspellings like “faceb00k”.', text: 'It has extra zeros in the name' },
-            q17: { correct: 'B', explanation: 'Typing the URL avoids fake links.', text: 'Type the official URL directly into your browser' },
-            q18: { correct: 'B', explanation: 'Official government sites use .gov domains.', text: 'Avoid it; government sites use .gov' },
-            q19: { correct: 'A', explanation: 'Misspelled URLs like “youtub” are often scams.', text: 'It’s missing an “e” in YouTube' },
-            q20: { correct: 'B', explanation: 'Verify links through official sources.', text: 'Check the website’s official URL or contact them' }
-        };
-
-        let earnings = 0;
-        let currentQuestion = 1;
-        const popup = document.getElementById('popup');
-        const popupMessage = document.getElementById('popup-message');
-        const congratsScreen = document.getElementById('congrats-screen');
-
-        // Show first question
-        document.getElementById('q1').classList.add('active');
-
-        if (localStorage.getItem('quizTaken')) {
-            disableQuiz();
-        }
-
-        function disableQuiz() {
-            document.querySelectorAll('.question').forEach(q => {
-                q.querySelectorAll('input').forEach(input => input.disabled = true);
-                q.querySelector('button').disabled = true;
-            });
-        }
-
-        function showPopup(message, isCorrect) {
-            popupMessage.innerHTML = isCorrect ? `✅ Correct!<br>${message}` : `😞 Sorry, that's incorrect!<br>Correct answer: ${message}`;
-            popup.style.display = 'block';
-        }
-
-        function closePopup() {
-            popup.style.display = 'none';
-            nextQuestion();
-        }
-
-        function submitAnswer(qNum) {
-            const question = document.getElementById(`q${qNum}`);
-            const feedbacks = document.getElementById(`feedback-q${qNum}`);
-            const inputs = question.querySelectorAll('input');
-            let allAnswered = true;
-
-            if (qNum === 8) { // Checkbox question
-                const checked = [...question.querySelectorAll('input:checked')].map(ch => ch.value);
-                const correctAnswers = answers[`q${qNum}`].correct;
-                let allCorrect = checked.length === correctAnswers.length && checked.every(val => correctAnswers.includes(val));
-                if (allCorrect) {
-                    earnings += 5 * correctAnswers.length;
-                    showPopup(answers[`q${qNum}`].explanation, true);
-                } else {
-                    showPopup(`Correct answers: ${answers[`q${qNum}`].text}<br>${answers[`q${qNum}`].explanation}`, false);
-                }
-            } else { // Radio button questions
-                const selected = question.querySelector('input:checked');
-                if (!selected) {
-                    allAnswered = false;
-                    feedbacks.className = 'feedback incorrect';
-                    feedbacks.innerHTML = 'Please select an answer.';
-                    feedbacks.style.display = 'block';
-                    return;
-                }
-                const userAnswer = selected.value;
-                const correctAnswer = answers[`q${qNum}`].correct;
-                if (userAnswer === correctAnswer) {
-                    earnings += 5;
-                    showPopup(answers[`q${qNum}`].explanation, true);
-                } else {
-                    showPopup(`Correct answer: ${answers[`q${qNum}`].text}<br>${answers[`q${qNum}`].explanation}`, false);
-                }
-            }
-
-            inputs.forEach(input => input.disabled = true);
-            question.querySelector('button').disabled = true;
-            feedbacks.style.display = 'none'; // Hide inline feedback, use popup instead
-            document.getElementById('aed-counter').innerHTML = `Earnings: AED ${earnings.toFixed(2)}`;
-        }
-
-        function nextQuestion() {
-            const current = document.getElementById(`q${currentQuestion}`);
-            current.classList.remove('active');
-            currentQuestion++;
-            if (currentQuestion <= 20) {
-                const next = document.getElementById(`q${currentQuestion}`);
-                next.classList.add('active');
-                next.querySelectorAll('input').forEach(input => input.disabled = false);
-                next.querySelector('button').disabled = false;
-            } else {
-                congratsScreen.style.display = 'block';
-                congratsScreen.innerHTML = `Congratulations! You earned AED ${earnings.toFixed(2)}!`;
-                localStorage.setItem('quizTaken', 'true');
-                disableQuiz();
-            }
-        }
-    </script>
-</body>
-</html>
+            q3: { correct: 'B', explanation: 'Avoid sharing specific locations to stay safe.', text: 'Post it privately and avoid tagging your
